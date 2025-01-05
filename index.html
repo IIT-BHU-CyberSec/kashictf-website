@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KashiCTF - IIT(BHU)Cybersec</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/share-tech-mono/1.0.0/share-tech-mono.min.css" rel="stylesheet">
+    <style>
+      @keyframes glitch {
+        0% {
+          text-shadow: 0.05em 0 0 rgba(255,0,0,0.75),
+                      -0.05em -0.025em 0 rgba(0,255,0,0.75),
+                      -0.025em 0.05em 0 rgba(0,0,255,0.75);
+        }
+        14% {
+          text-shadow: 0.05em 0 0 rgba(255,0,0,0.75),
+                      -0.05em -0.025em 0 rgba(0,255,0,0.75),
+                      -0.025em 0.05em 0 rgba(0,0,255,0.75);
+        }
+        15% {
+          text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75),
+                      0.025em 0.025em 0 rgba(0,255,0,0.75),
+                      -0.05em -0.05em 0 rgba(0,0,255,0.75);
+        }
+        49% {
+          text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75),
+                      0.025em 0.025em 0 rgba(0,255,0,0.75),
+                      -0.05em -0.05em 0 rgba(0,0,255,0.75);
+        }
+        50% {
+          text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75),
+                      0.05em 0 0 rgba(0,255,0,0.75),
+                      0 -0.05em 0 rgba(0,0,255,0.75);
+        }
+        99% {
+          text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75),
+                      0.05em 0 0 rgba(0,255,0,0.75),
+                      0 -0.05em 0 rgba(0,0,255,0.75);
+        }
+        100% {
+          text-shadow: -0.025em 0 0 rgba(255,0,0,0.75),
+                      -0.025em -0.025em 0 rgba(0,255,0,0.75),
+                      -0.025em -0.05em 0 rgba(0,0,255,0.75);
+        }
+      }
+
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Share Tech Mono', monospace;
+      }
+
+      .gradient-background {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        background: linear-gradient(135deg, #1a1b2f, #0c0d1a 40%, #3b001c 70%, #121520);
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .gradient-background::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.15),
+          rgba(0, 0, 0, 0.15) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+        pointer-events: none;
+      }
+
+      .gradient-background::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('https://www.transparenttextures.com/patterns/noise.png');
+        opacity: 0.1;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .content {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .logo {
+        max-width: 500px;
+        width: 50%;
+        height: auto;
+        filter: drop-shadow(0 0 10px rgba(255, 117, 151, 0.5));
+      }
+
+      .text {
+        max-width: 250px;
+        width: 60%;
+        height: auto;
+        filter: drop-shadow(0 0 10px rgba(255, 117, 151, 0.5));
+      }
+
+      .registration {
+        font-size: 1.5rem;
+        color: #ffffff;
+        font-weight: bold;
+        margin: 10px 0 0 0;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        animation: glitch 2s infinite;
+      }
+
+      .event-date {
+        font-size: 1.2rem;
+        color: #ff7597;
+        margin: 5px 0 0 0;
+        text-align: center;
+        text-shadow: 0 0 10px rgba(255, 117, 151, 0.7);
+        letter-spacing: 3px;
+      }
+
+      .team-link {
+        font-size: 1.2rem;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+        padding: 5px 10px;
+        transition: all 0.3s ease;
+      }
+
+      .team-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 1px solid rgba(255, 117, 151, 0.5);
+        transform: skew(-10deg);
+        transition: all 0.3s ease;
+      }
+
+      .team-link:hover {
+        color: #ff7597;
+        text-shadow: 0 0 10px rgba(255, 117, 151, 0.7);
+      }
+
+      .team-link:hover::before {
+        transform: skew(-10deg) scale(1.2);
+        border-color: #ff7597;
+        box-shadow: 0 0 20px rgba(255, 117, 151, 0.3);
+      }
+
+      /* Add scanline effect */
+      @keyframes scan {
+        0% {
+          background-position: 0 -100vh;
+        }
+        100% {
+          background-position: 0 100vh;
+        }
+      }
+
+      .gradient-background::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.15),
+          rgba(0, 0, 0, 0.15) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+        animation: scan 10s linear infinite;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gradient-background">
+      <div class="content">
+        <a href="https://ctftime.org/team/22546" target="_blank" class="team-link">IIT(BHU)Cybersec presents</a>
+        <img src="assets/kashictf-logo.png" alt="KashiCTF Logo" class="logo">
+        <img src="assets/kashictf-text.svg" alt="KashiCTF Text" class="text">
+        <p class="registration">Registration Starting Soon</p>
+        <p class="event-date">22 February 2025</p>
+      </div>
+    </div>
+  </body>
+</html>
